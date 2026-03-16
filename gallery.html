@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gallery | Rehema Care Services</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header id="main-header">
+        <div class="container">
+            <nav>
+                <a href="index.html" class="logo">
+                    <img src="logo.png" alt="Rehema Care Services Logo" class="logo-svg">
+                    <div class="logo-text">
+                        <span class="brand-name">REHEMA</span>
+                        <span class="sub-name">Care Services</span>
+                    </div>
+                </a>
+                <ul id="nav-menu">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="services.html">Services</a></li>
+                    <li><a href="gallery.html" class="active">Gallery</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+                <button class="hamburger" id="hamburger"><i class="fas fa-bars"></i></button>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section id="gallery">
+            <div class="container">
+                <h2>Gallery & Testimonials</h2>
+                <div class="gallery-grid" id="galleryGrid">
+                    <!-- Standard Images -->
+                    <img src="https://images.pexels.com/photos/3768131/pexels-photo-3768131.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Happy client receiving care">
+                    <div class="testimonial-card">
+                        <p>"The care my mother received was exceptional. The caregivers from Rehema are truly compassionate and professional."</p>
+                        <h4>- Jane D.</h4>
+                    </div>
+                    <img src="https://images.pexels.com/photos/7551673/pexels-photo-7551673.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Rehema caregiver photo">
+                    <img src="https://images.pexels.com/photos/3845126/pexels-photo-3845126.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Elderly person smiling">
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <h4>Rehema Care Services</h4>
+                    <p>Caring with Compassion</p>
+                </div>
+                <div class="footer-contact">
+                    <p><i class="fas fa-phone"></i> <span class="editable" data-key="text_phone">+1 (555) 123-4567</span></p>
+                    <p><i class="fas fa-envelope"></i> <span class="editable" data-key="text_email">contact@rehemacare.com</span></p>
+                    <p><i class="fas fa-map-marker-alt"></i> <span class="editable" data-key="text_address">123 Care Street, Healthville, USA</span></p>
+                </div>
+                <div class="footer-social">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Rehema Care Services. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+    <script>
+        const hamburger = document.getElementById('hamburger');
+        const navMenu = document.getElementById('nav-menu');
+        hamburger.addEventListener('click', () => { navMenu.classList.toggle('show'); });
+
+        const customLogo = localStorage.getItem('website_logo');
+        if (customLogo) {
+            document.querySelector('.logo-svg').src = customLogo;
+        }
+
+        // Load Admin Photos from LocalStorage
+        const galleryGrid = document.getElementById('galleryGrid');
+        const storedImages = JSON.parse(localStorage.getItem('rehemaGallery') || '[]');
+
+        storedImages.forEach(item => {
+            // Handle new object format {type, src} or legacy strings
+            const src = item.src || item; 
+            const type = item.type || 'image';
+
+            let mediaElement;
+            if (type === 'video') {
+                mediaElement = document.createElement('video');
+                mediaElement.controls = true;
+            } else {
+                mediaElement = document.createElement('img');
+                mediaElement.alt = "Gallery Upload";
+            }
+            
+            mediaElement.src = src;
+            galleryGrid.appendChild(mediaElement);
+        });
+
+        // Load Editable Text Content
+        document.querySelectorAll('.editable').forEach(element => {
+            const key = element.getAttribute('data-key');
+            const savedText = localStorage.getItem(key);
+            if (savedText) {
+                element.textContent = savedText;
+            }
+        });
+    </script>
+</body>
+</html>
