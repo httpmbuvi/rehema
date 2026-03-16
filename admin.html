@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel | Rehema Care Services</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header id="main-header">
+        <div class="container">
+            <nav>
+                <a href="index.html" class="logo">
+                    <img src="logo.png" alt="Rehema Care Services Logo" class="logo-svg">
+                    <div class="logo-text">
+                        <span class="brand-name">REHEMA</span>
+                        <span class="sub-name">Care Services</span>
+                    </div>
+                </a>
+                <ul id="nav-menu">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="gallery.html">Back to Gallery</a></li>
+                </ul>
+                <button class="hamburger" id="hamburger"><i class="fas fa-bars"></i></button>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section id="admin">
+            <div class="container">
+                <h2>Admin Panel</h2>
+
+                <!-- Sign Up Container (First Time Setup) -->
+                <div id="signup-container" class="login-container hidden">
+                    <h3>Set Admin Password</h3>
+                    <p>Create a password to access the admin panel.</p>
+                    <form id="signupForm">
+                        <input type="password" id="newPassword" placeholder="New Password" required>
+                        <input type="password" id="confirmPassword" placeholder="Confirm Password" required>
+                        <button type="submit" class="btn btn-primary">Set Password</button>
+                    </form>
+                    <p id="signup-error" style="color: red; margin-top: 1rem; display: none;">Passwords do not match</p>
+                </div>
+
+                <!-- Login Container -->
+                <div id="login-container" class="login-container hidden">
+                    <h3>Admin Login</h3>
+                    <form id="loginForm">
+                        <input type="password" id="password" placeholder="Enter Password" required>
+                        <button type="submit" class="btn btn-primary">Login</button>
+                    </form>
+                    <p id="login-error" style="color: red; margin-top: 1rem; display: none;">Incorrect Password</p>
+                </div>
+
+                <div id="admin-content" class="admin-panel hidden">
+                    <div style="text-align: right; margin-bottom: 1rem; border-bottom: 1px solid #ddd; padding-bottom: 1rem;">
+                        <button id="logoutBtn" class="btn btn-secondary" style="background-color: #555; font-size: 0.9rem; padding: 0.5rem 1.2rem;">Logout <i class="fas fa-sign-out-alt"></i></button>
+                    </div>
+
+                    <h3>Manage Website Media</h3>
+                    <p>Select a target and upload an image or video from your device.</p>
+                    <p style="color: #d32f2f; font-size: 0.9rem;"><strong>Note:</strong> Due to browser limits, please use files smaller than 2MB.</p>
+                    
+                    <form id="mediaForm">
+                        <label for="updateTarget"><strong>Target Section:</strong></label>
+                        <select id="updateTarget" style="width: 100%; padding: 10px; margin-bottom: 1rem; border-radius: 5px; border: 1px solid #ccc;">
+                            <option value="gallery">Gallery - Add New Item</option>
+                            <option value="home_hero">Home Page - Hero Background Image</option>
+                            <option value="website_logo">Website Logo (Header)</option>
+                        </select>
+
+                        <label for="fileInput"><strong>Select File:</strong></label>
+                        <input type="file" id="fileInput" accept="image/*,video/*" required>
+                        
+                        <button type="submit" class="btn btn-primary">Upload & Save</button>
+                    </form>
+                    <br>
+                    <button id="clearStorage" class="btn btn-secondary" style="background-color: #d32f2f;">Clear All Custom Media</button>
+
+                    <hr style="margin: 2rem 0; border: 1px solid #ddd;">
+
+                    <h3>Manage Page Content</h3>
+                    <form id="contentForm">
+                        <label for="contentKey"><strong>Select Content to Edit:</strong></label>
+                        <select id="contentKey" style="width: 100%; padding: 10px; margin-bottom: 1rem; border-radius: 5px; border: 1px solid #ccc;">
+                            <option value="home_welcome_text">Home: Welcome Text</option>
+                            <option value="text_tagline">Home: Tagline</option>
+                            <option value="text_phone">Global: Phone Number</option>
+                            <option value="text_email">Global: Email Address</option>
+                            <option value="text_address">Global: Physical Address</option>
+                            <option value="text_about_who">About: Who We Are</option>
+                            <option value="text_about_mission">About: Mission</option>
+                            <option value="text_about_vision">About: Vision</option>
+                        </select>
+
+                        <label for="welcomeText"><strong>Content Text:</strong></label>
+                        <textarea id="welcomeText" rows="4" style="width: 100%; padding: 10px; margin-bottom: 1rem; border-radius: 5px; border: 1px solid #ccc; font-family: 'Poppins', sans-serif;"></textarea>
+                        <button type="submit" class="btn btn-primary">Save Text</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <h4>Rehema Care Services</h4>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Rehema Care Services. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+    <script>
+        const hamburger = document.getElementById('hamburger');
+        const navMenu = document.getElementById('nav-menu');
+        hamburger.addEventListener('click', () => { navMenu.classList.toggle('show'); });
+
+        // --- Authentication Logic ---
+        const signupContainer = document.getElementById('signup-container');
+        const loginContainer = document.getElementById('login-container');
+        const adminContent = document.getElementById('admin-content');
+        
+        const signupForm = document.getElementById('signupForm');
+        const loginForm = document.getElementById('loginForm');
+        const logoutBtn = document.getElementById('logoutBtn');
+        
+        const signupError = document.getElementById('signup-error');
+        const loginError = document.getElementById('login-error');
+
+        // Check if a password has been set previously
+        const storedPassword = localStorage.getItem('admin_password');
+
+        if (!storedPassword) {
+            // No password set -> Show Signup
+            signupContainer.classList.remove('hidden');
+        } else {
+            // Password exists -> Check if logged in
+            if (sessionStorage.getItem('isAdminAuthenticated') === 'true') {
+                adminContent.classList.remove('hidden');
+            } else {
+                loginContainer.classList.remove('hidden');
+            }
+        }
+
+        // Handle Sign Up
+        signupForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const newPass = document.getElementById('newPassword').value;
+            const confirmPass = document.getElementById('confirmPassword').value;
+
+            if (newPass !== confirmPass) {
+                signupError.style.display = 'block';
+                return;
+            }
+
+            localStorage.setItem('admin_password', newPass);
+            alert('Password set successfully! Please login.');
+            window.location.reload();
+        });
+
+        // Admin Logic
+        const mediaForm = document.getElementById('mediaForm');
+        const fileInput = document.getElementById('fileInput');
+        const updateTarget = document.getElementById('updateTarget');
+        const clearStorageBtn = document.getElementById('clearStorage');
+        const contentForm = document.getElementById('contentForm');
+        const welcomeTextArea = document.getElementById('welcomeText');
+        const contentKeySelector = document.getElementById('contentKey');
+
+        // Handle Login
+        loginForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const passwordInput = document.getElementById('password').value;
+            const savedPassword = localStorage.getItem('admin_password');
+
+            if (passwordInput === savedPassword) {
+                loginContainer.classList.add('hidden');
+                adminContent.classList.remove('hidden');
+                sessionStorage.setItem('isAdminAuthenticated', 'true');
+            } else {
+                loginError.style.display = 'block';
+            }
+        });
+
+        // Handle Logout
+        logoutBtn.addEventListener('click', () => {
+            sessionStorage.removeItem('isAdminAuthenticated');
+            window.location.reload();
+        });
+        // --- End Authentication Logic ---
+
+        // Function to load text based on selection
+        const loadSelectedText = () => {
+            const key = contentKeySelector.value;
+            const savedText = localStorage.getItem(key);
+            welcomeTextArea.value = savedText || '';
+        };
+
+        // Load existing custom content on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            loadSelectedText();
+            // Load custom logo if exists
+            const customLogo = localStorage.getItem('website_logo');
+            if (customLogo) {
+                document.querySelector('.logo-svg').src = customLogo;
+            }
+        });
+
+        // Reload text when dropdown changes
+        contentKeySelector.addEventListener('change', loadSelectedText);
+
+        contentForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const key = contentKeySelector.value;
+            localStorage.setItem(key, welcomeTextArea.value);
+            alert('Content updated successfully!');
+        });
+
+        mediaForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const file = fileInput.files[0];
+            if (!file) return;
+
+            // Size Check (approx 2MB limit check to prevent crash)
+            if (file.size > 2 * 1024 * 1024) {
+                alert("File is too large! Please select a file smaller than 2MB.");
+                return;
+            }
+
+            const reader = new FileReader();
+            
+            reader.onload = function(event) {
+                const base64Data = event.target.result;
+                const target = updateTarget.value;
+                const type = file.type.startsWith('video') ? 'video' : 'image';
+
+                try {
+                    if (target === 'gallery') {
+                        const gallery = JSON.parse(localStorage.getItem('rehemaGallery') || '[]');
+                        gallery.push({ type: type, src: base64Data });
+                        localStorage.setItem('rehemaGallery', JSON.stringify(gallery));
+                        alert('Added to Gallery successfully!');
+                    } else if (target === 'home_hero') {
+                        if (type === 'video') { alert('Hero section only supports images.'); return; }
+                        localStorage.setItem('home_hero_bg', base64Data);
+                        alert('Home Hero background updated!');
+                    } else if (target === 'website_logo') {
+                        if (type === 'video') { alert('Logo must be an image.'); return; }
+                        localStorage.setItem('website_logo', base64Data);
+                        document.querySelector('.logo-svg').src = base64Data; // Update immediately
+                        alert('Website logo updated!');
+                    }
+                    mediaForm.reset();
+                } catch (err) {
+                    alert("Storage quota exceeded! File is too large or storage is full.");
+                    console.error(err);
+                }
+            };
+
+            reader.readAsDataURL(file);
+        });
+
+        clearStorageBtn.addEventListener('click', function() {
+            localStorage.removeItem('rehemaGallery');
+            localStorage.removeItem('home_hero_bg');
+            localStorage.removeItem('home_welcome_text');
+            localStorage.removeItem('website_logo');
+            
+            // Clear other text keys
+            ['text_tagline', 'text_phone', 'text_email', 'text_address', 'text_about_who', 'text_about_mission', 'text_about_vision'].forEach(key => {
+                localStorage.removeItem(key);
+            });
+
+            alert('All custom media and text cleared. Refresh pages to reset.');
+            welcomeTextArea.value = '';
+        });
+    </script>
+</body>
+</html>
